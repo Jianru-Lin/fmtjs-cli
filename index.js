@@ -7,10 +7,12 @@ var argv = require('yargs')
 			.demand(['i', 'o'])
 			.argv
 
-var text = load_file(argv.i)
+var input_filename = path.resolve(argv.i)
+var text = load_file(input_filename)
 var opt = {
 	// 如果输出文件是以 .html 结尾，则以 html 模式转换，否则以文本模式转换
-	mode: /\.htm(l)?$/.test(argv.o) ? 'html' : 'text'
+	mode: /\.htm(l)?$/.test(argv.o) ? 'html' : 'text',
+	filename: path.basename(input_filename)
 }
 var new_text = fmtjs(text, opt)
 save_file(argv.o, new_text)
